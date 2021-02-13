@@ -1,0 +1,125 @@
+-- Connect to the 'master' database to run this snippet
+USE master
+GO
+
+CREATE DATABASE TutorialDB
+GO
+
+
+-- Create a new table called 'TableName' in schema 'SchemaName'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.Employees', 'U') IS NOT NULL
+DROP TABLE dbo.Employees
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.Employees
+(
+    EmployeesId INT NOT NULL PRIMARY KEY, -- primary key column
+    Name [NVARCHAR](50) NOT NULL,
+    Location [NVARCHAR](50) NOT NULL,
+    Wins [INT] NOT NULL
+    -- specify more columns here
+);
+GO
+
+-- Insert rows into table 'Employees'
+INSERT INTO Employees
+   ([EmployeesId],[Name],[Location],[Wins])
+VALUES
+   ( 102938, N'Jared', N'United States', 12),
+   ( 022376, N'Nikita', N'India', 12),
+   ( 102873, N'Tom', N'Germany', 10),
+   ( 098732, N'Jake', N'United States', 9)
+GO
+
+INSERT INTO Employees
+VALUES
+    (071238, N'Yuan', N'China', 15),
+    (109283, N'Liu', N'Germany',12)
+GO
+
+-- Query the total count of employees
+SELECT COUNT(*) as EmployeeCount FROM dbo.Employees;
+-- Query all employee information
+SELECT e.EmployeesId, e.Name, e.Location
+FROM dbo.Employees as e
+GO
+
+
+-- Create the table in the specified schema
+CREATE TABLE dbo.EmployeesBirth
+(
+    EmployeesId INT NOT NULL PRIMARY KEY, -- primary key column
+    Name [NVARCHAR](50) NOT NULL,
+    Birth [NVARCHAR](50) NOT NULL
+    -- specify more columns here
+);
+GO
+
+-- Insert rows into table 'Employees'
+INSERT INTO EmployeesBirth
+   ([EmployeesId],[Name],[Birth])
+VALUES
+   ( 102938, N'Jared', N'1987-01-02'),
+   ( 022376, N'Nikita', N'1980-11-02'),
+   ( 102873, N'Tom', N'1987-06-18'),
+   ( 098732, N'Jake', N'1987-03-30'),
+   ( 534212, N'Lin', N'1996-04-08'),
+   ( 071238, N'Yuan', N'1985-09-01')
+GO
+
+-- inner join
+SELECT Employees.EmployeesId, Employees.Name, Employees.Location, Employees.Wins, EmployeesBirth.Birth
+FROM Employees
+JOIN EmployeesBirth ON Employees.Name=EmployeesBirth.Name;
+GO
+
+-- outer join
+SELECT Employees.EmployeesId, Employees.Name, Employees.Location, Employees.Wins, EmployeesBirth.Birth
+FROM Employees
+LEFT JOIN EmployeesBirth ON Employees.Name=EmployeesBirth.Name;
+GO
+
+-- outer join
+SELECT Employees.EmployeesId, Employees.Name, Employees.Location, Employees.Wins, EmployeesBirth.Birth
+FROM Employees
+RIGHT JOIN EmployeesBirth ON Employees.Name=EmployeesBirth.Name;
+GO
+
+-- Union
+SELECT EmployeesId, Name FROM Employees UNION SELECT EmployeesId, Name FROM EmployeesBirth;
+GO
+
+SELECT EmployeesId, Name FROM Employees UNION ALL SELECT EmployeesId, Name FROM EmployeesBirth;
+GO
+
+-- Subqueries
+-- (want to know who has the wins greater than Jake's)
+SELECT EmployeesId, Name, Location, Wins FROM Employees
+WHERE Wins > (
+    SELECT Wins FROM Employees WHERE Name = 'Jake'
+    );
+GO
+
+-- correlated subquery
+--(find which Employee has Wins greater than is the average for those 
+-- with the same location)
+SELECT EmployeesId, Name, Location, Wins FROM Employees AS t
+WHERE Wins > (
+    SELECT AVG(Wins) FROM Employees 
+    WHERE Location = t.Location
+    );
+GO
+
+-- find which Employees has the best Wins record and return 
+-- their name, id and birth
+SELECT Name, EmployeesId, Birth
+FROM EmployeesBirth
+WHERE Name = (
+    SELECT Name FROM Employees
+    WHERE Wins = (
+        SELECT MAX(Wins) FROM Employees
+        )
+    );
+GO
+

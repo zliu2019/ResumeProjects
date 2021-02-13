@@ -1,0 +1,212 @@
+-- CREATE DATABASE called 'DatabaseName'
+-- Connect to the 'master' database to run this snippet
+USE master
+GO
+-- Create the new database if it does not exist already
+IF NOT EXISTS (
+    SELECT name
+        FROM sys.databases
+        WHERE name = N'birthday'
+)
+CREATE DATABASE birthday
+GO
+
+--------------------------------------------------------------
+-- CREATE TABLE called 'TableName' in schema 'dbo'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.tourney', 'U') IS NOT NULL
+DROP TABLE dbo.tourney      
+GO
+
+-- Create the table in the specified schema
+CREATE TABLE dbo.tourney
+(
+    name VARCHAR(30), -- primary key column
+    wins REAL,
+    best REAL,
+    size REAL
+    -- specify more columns here
+);
+GO
+
+-- Insert cells for table tourney
+INSERT INTO dbo.tourney 
+    (name, wins, best, size)
+VALUES 
+    ('Dolly', '7', '245', '8.5'),
+    ('Etta', '4', '283', '9'),
+    ('Irma', '9', '266', '7'),
+    ('Barbara', '2', '197', '7.5'),
+    ('Gladys', '13', '273', '8')
+GO
+
+------------------------------------------------------------------
+-- create another table in schema dbo
+CREATE TABLE dbo.dinners 
+(
+    name varchar(30),
+    birthdate date,
+    entree varchar(30),
+    side varchar(30),
+    dessert varchar(30)
+);
+GO
+
+-- Add values
+INSERT INTO dbo.dinners 
+    (name, birthdate, entree, side, dessert)
+VALUES 
+    ('Dolly', '1946-01-19', 'steak', 'salad', 'cake'),
+    ('Etta', '1938-01-25', 'chicken', 'fries', 'ice cream'),
+    ('Irma', '1941-02-18', 'tofu', 'fries', 'cake'),
+    ('Barbara', '1948-12-25', 'tofu', 'salad', 'ice cream'),
+    ('Gladys', '1944-05-28', 'steak', 'fries', 'ice cream')
+GO
+
+----------------------------------------------
+-- Querying
+SELECT * FROM dbo.dinners
+GO
+
+SELECT * FROM tourney
+GO
+
+-- Delete all the content in table dinner
+TRUNCATE TABLE dinners;
+GO
+
+-- Changing the order of the columns  
+INSERT INTO dinners 
+    (name, entree, side, birthdate, dessert)
+VALUES 
+    ('Dolly', 'steak', 'salad', '1946-01-19', 'cake')
+GO
+
+-- Skipping the column list, 
+-- but keeping the values in order 
+-- Align with the order when the table was created 
+INSERT INTO dinners
+    VALUES ('Zhilin', '1996-04-08', 'd1','d2', 'icecream')
+GO
+
+------------------------------------------------------
+-- CREATE
+CREATE TABLE dbo.Products  
+   (ProductID int PRIMARY KEY NOT NULL,  
+   ProductName varchar(25) NOT NULL,  
+   Price money NULL,  
+   ProductDescription varchar(max) NULL)  
+GO  
+
+-- Standard syntax  
+INSERT dbo.Products (ProductID, ProductName, Price, ProductDescription)  
+    VALUES (1, 'Clamp', 12.48, 'Workbench clamp')  
+GO   
+
+-- Clear all content
+TRUNCATE TABLE dbo.Products;
+GO
+
+-- Changing the order of the columns  
+INSERT dbo.Products (ProductName, ProductID, Price, ProductDescription)  
+    VALUES ('Screwdriver', 50, 3.17, 'Flat head')  
+GO 
+
+-- Skipping the column list, but keeping the values in order  
+INSERT dbo.Products  
+    VALUES (75, 'Tire Bar', NULL, 'Tool for changing tires.')  
+GO  
+
+-- The schema name is optional as long as you are accessing 
+-- and changing a table in your default schema. Because the
+-- ProductDescription column allows null values and no 
+-- value is being provided, the ProductDescription column 
+-- name and value can be dropped from the statement 
+-- completely.
+-- Dropping the optional dbo and dropping the ProductDescription column  
+INSERT Products (ProductID, ProductName, Price)  
+    VALUES (3000, '3 mm Bracket', 0.52)  
+GO  
+
+-- UPDATE
+-- Type and execute the following UPDATE statement to 
+-- change the ProductName of the second product from 
+-- Screwdriver, to Flat Head Screwdriver.
+UPDATE dbo.Products  
+    SET ProductName = 'Flat Head Screwdriver'  
+    WHERE ProductID = 50  
+GO
+
+-- VIEW
+-- Returns ProductName and the Price including a 7% tax  
+-- Provides the name CustomerPays for the calculated column  
+SELECT ProductName, Price * 1.07 AS CustomerPays  
+    FROM dbo.Products  
+GO  
+
+SELECT * From Products
+    WHERE ProductID > 60
+GO
+
+-- CREATE VIEWS and STORE PROCEDURES
+
+-- create a view that executes a select statement, and 
+-- returns the names and prices of our products to the user.
+CREATE VIEW vw_Names  
+   AS  
+   SELECT ProductName, Price FROM Products;  
+GO    
+
+--Views are treated just like tables. 
+-- Use a SELECT statement to access a view.
+SELECT * FROM vw_Names;  
+GO   
+
+-- Create a stored procedure
+-- The following statement creates a stored procedure name
+-- pr_Names, accepts an input parameter named @VarPrice
+-- of data type money. The stored procedure prints the
+-- statement Products less than concatenated with the 
+-- input parameter that is changed from the money data 
+-- type into a varchar(10) character data type. Then, 
+-- the procedure executes a SELECT statement on the view, 
+-- passing the input parameter as part of the WHERE clause. 
+-- This returns all products that cost less than the input
+--  parameter value.
+CREATE PROCEDURE pr_Names @VarPrice money  
+   AS  
+   BEGIN  
+      -- The print statement returns text to the user  
+      PRINT 'Products less than ' + CAST(@VarPrice AS varchar(10));  
+      -- A second statement starts here  
+      SELECT ProductName, Price FROM vw_Names  
+            WHERE Price < @varPrice;  
+   END  
+GO    
+
+-- To test the stored procedure, type and execute the 
+-- following statement. The procedure should return the 
+-- names of the two products entered into the Products 
+-- table in Lesson 1 with a price that is less than 10.00.
+EXECUTE pr_Names 10.00;  
+GO  
+
+--Drop
+DROP PROC pr_Names;  
+GO   
+
+DROP VIEW vw_Names;  
+GO  
+
+DELETE FROM Products;  
+GO  
+
+DROP TABLE dbo.tourney
+GO
+
+-- To drop database, first not using it
+USE MASTER;  
+GO  
+
+DROP DATABASE birthday;  
+GO  
