@@ -123,3 +123,14 @@ WHERE Name = (
     );
 GO
 
+-- Find employees whose name starts with L or Y
+SELECT EmployeesId, Name FROM Employees
+WHERE Name Like '[L, Y]%'
+GO
+
+-- Find employees whose name starts with L or Y
+-- and ends with n or u
+SELECT EmployeesId, Name FROM Employees
+WHERE Name Like '[L, Y]%' 
+AND Name LIKE '%[n, u]'
+GO

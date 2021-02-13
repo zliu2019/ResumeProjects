@@ -1,0 +1,78 @@
+-- Create a new database called 'DatabaseName'
+-- Connect to the 'master' database to run this snippet
+USE master
+GO
+-- Create the new database if it does not exist already
+IF NOT EXISTS (
+    SELECT name
+        FROM sys.databases
+        WHERE name = N'MoviesDB'
+)
+CREATE DATABASE MoviesDB
+GO
+
+USE MoviesDB
+GO
+
+-- Create a new table called 'TableName' in schema 'SchemaName'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.IMDB_Top250movies2_OMDB_Detailed', 'U') IS NOT NULL
+DROP TABLE dbo.IMDB_Top250movies2_OMDB_Detailed
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.IMDB_Top250movies2_OMDB_Detailed
+( 
+    RowId [INT] NOT NULL PRIMARY KEY, -- primary key column
+    Title [NVARCHAR](50) NOT NULL,
+    Year [INT] NOT NULL,
+    Rated [NVARCHAR](50) NOT NULL,
+    Released [NVARCHAR](50) NOT NULL,
+    Runtime [NVARCHAR](50) NOT NULL,
+    Genre [NVARCHAR](50) NOT NULL,
+    Director [NVARCHAR](50) NOT NULL,
+    Writer [NVARCHAR](50) NOT NULL,
+    Actors [NVARCHAR](4000) NOT NULL,
+    Plot [NVARCHAR](50) NOT NULL,
+    Language [NVARCHAR](50) NOT NULL,
+    Awards [NVARCHAR](50) NOT NULL,
+    Poster [NVARCHAR](50) NOT NULL,
+    Ratings_Source [NVARCHAR](50) NOT NULL,
+    Ratings_Value [NVARCHAR](4000) NOT NULL,
+    Metascore [INT] NOT NULL,
+    imdbRating [DECIMAL](5,1) NOT NULL,
+    imdbVotes [INT] NOT NULL,
+    imdbID [NVARCHAR](4000) NOT NULL,
+    Type [NVARCHAR](50) NOT NULL,
+    tomatoMeter [NVARCHAR](50),
+    tomatoImage [NVARCHAR](50),
+    tomatoRating [NVARCHAR](50),
+    tomatoReviews [NVARCHAR](50),
+    tomatoFresh [NVARCHAR](50),
+    tomatoRotten [NVARCHAR](50),
+    tomatoConsensus [NVARCHAR](50),
+    tomatoUserMeter [NVARCHAR](50),
+    tomatoUserRating [NVARCHAR](50),
+    tomatoUserReviews [NVARCHAR](50),
+    tomatoURL [NVARCHAR](50),
+    DVD [NVARCHAR](50) NOT NULL,
+    BoxOffice [NVARCHAR](50),
+    Production [NVARCHAR](50) NOT NULL,
+    Website [NVARCHAR](50),
+    Response [NVARCHAR](50) NOT NULL,
+);
+GO
+
+BULK INSERT dbo.IMDB_Top250movies2_OMDB_Detailed
+    FROM 'C:\Users\xxxli\Desktop\ResumeProjects\IMDB_Analysis_SQL\imdb_data_csv\studentoflife-imdb-top-250-lists-and-5000-or-so-data-records\IMDB_Top250movies2_OMDB_Detailed.csv'
+    WITH
+    (
+        FIELDTERMINATOR = ',',
+        ROWTERMINATOR = '\n'
+    )
+GO
+
+SELECT * FROM IMDB_Top250movies2_OMDB_Detailed
+GO
+
+DROP TABLE IMDB_Top250movies2_OMDB_Detailed
+GO
