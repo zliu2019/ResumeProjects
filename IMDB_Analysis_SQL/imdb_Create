@@ -1,0 +1,79 @@
+-- Create a new database called 'DatabaseName'
+-- Connect to the 'master' database to run this snippet
+USE master
+GO
+-- Create the new database if it does not exist already
+IF NOT EXISTS (
+    SELECT name
+        FROM sys.databases
+        WHERE name = N'MoviesDB'
+)
+CREATE DATABASE MoviesDB
+GO
+
+USE MoviesDB
+GO
+
+-- Create a new table called 'TableName' in schema 'SchemaName'
+-- Drop the table if it already exists
+IF OBJECT_ID('dbo.IMDB_Top250movies2_OMDB_Detailed_Cleaned', 'U') IS NOT NULL
+DROP TABLE dbo.IMDB_Top250movies2_OMDB_Detailed_Cleaned
+GO
+-- Create the table in the specified schema
+CREATE TABLE dbo.IMDB_Top250movies2_OMDB_Detailed_Cleaned
+( 
+    RowId [INT],
+    Title [NVARCHAR](500) NOT NULL,
+    Years [INT],
+    Rated [NVARCHAR](50),
+    Released [datetime],
+    Runtime [INT],
+    Genre [NVARCHAR](500),
+    Director [NVARCHAR](50),
+    Writer [NVARCHAR](4000),
+    Actors [NVARCHAR](4000),
+    Plot [NVARCHAR](4000),
+    Language [NVARCHAR](50),
+    Country [NVARCHAR](500),
+    Awards [NVARCHAR](4000),
+    Poster [NVARCHAR](4000),
+    Ratings_Source [NVARCHAR](500),
+    Ratings_Value [NVARCHAR](4000),
+    Metascore [FLOAT],
+    imdbRating [FLOAT],
+    imdbVotes [INT],
+    imdbID [NVARCHAR](4000),
+    Type [NVARCHAR](50),
+    tomatoMeter [FLOAT],
+    tomatoImage [FLOAT],
+    tomatoRating [FLOAT],
+    tomatoReviews [FLOAT],
+    tomatoFresh [FLOAT],
+    tomatoRotten [FLOAT],
+    tomatoConsensus [FLOAT],
+    tomatoUserMeter [FLOAT],
+    tomatoUserRating [FLOAT],
+    tomatoUserReviews [FLOAT],
+    tomatoURL [NVARCHAR](4000),
+    DVD [datetime],
+    BoxOffice [FLOAT],
+    Production [NVARCHAR](4000),
+    Website [NVARCHAR](4000),
+    Response [NVARCHAR](50),
+);
+GO
+
+BULK INSERT dbo.IMDB_Top250movies2_OMDB_Detailed_Cleaned
+    FROM 'C:\Users\xxxli\Desktop\ResumeProjects\IMDB_Analysis_SQL\imdb_data_csv\datasets\IMDB_Top250movies2_OMDB_Detailed_Cleaned.csv'
+    WITH
+    (
+        FIELDTERMINATOR = ',',
+        ROWTERMINATOR = '\n'
+    )
+GO
+
+SELECT * FROM IMDB_Top250movies2_OMDB_Detailed_Cleaned
+GO
+
+DROP TABLE IMDB_Top250movies2_OMDB_Detailed_Cleaned
+GO
