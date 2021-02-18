@@ -72,7 +72,8 @@ BULK INSERT dbo.IMDB_Top250movies2_OMDB_Detailed_Cleaned
     )
 GO
 
-SELECT * FROM IMDB_Top250movies2_OMDB_Detailed_Cleaned
+SELECT title, production FROM IMDB_Top250movies2_OMDB_Detailed_Cleaned
+
 GO
 
 DROP TABLE IMDB_Top250movies2_OMDB_Detailed_Cleaned

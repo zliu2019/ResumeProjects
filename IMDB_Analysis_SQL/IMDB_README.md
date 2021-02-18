@@ -23,5 +23,7 @@ This collection of SQL queries is used for analysis following questions:
 1. Among Top250, how many movies are rated as R?
 2. Among Top250, find the director that shows up most frequently.
 3. Among Top250, find the Production Company that shows up most frequently.
-4.
-5.
+4. What genre usually gets high ratings?
+5. Which country (other than USA) has most movies in this list,
+6. Which decade produce most movies for this list,
+7. Is there any pattern in plotlines, in these movies.
