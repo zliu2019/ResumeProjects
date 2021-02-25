@@ -8,22 +8,43 @@ from adtk.detector import QuantileAD
 from adtk.detector import GeneralizedESDTestAD
 from adtk.detector import AutoregressionAD
 
+"""
+This py file contains:
+
+    1/ Class Imputer:
+        we have 3 imputers implemented
+        a. SimpleImputer
+        b. IterativeImputer
+        c. KnnImputer
+
+    2/ Other helper functions:
+        a. deleter
+        b. outlier_detector
+        c. MAPE
+        d. cal_chunk_size
+        e. cross_validator
+
+"""
 
 class Imputer:
     original_df = pd.DataFrame()
 
     def __init__(self, _original: pd.DataFrame):
+        """ Imputer initiation.
+
+        :param _original: pd.DataFrame
+        """
         self.original_df = _original.copy(deep=True)
 
     def set_original_df(self, _df):
-        """
-        Set a dataframe to be imputed.
+        """ Set a dataframe to be imputed.
         """
         self.original_df = _df
 
     def SimpleImputer(self):
-        # univariate, which imputes values in the i-th feature dimension using only non-missing values in that feature dimension
-
+        """ Univariate, which imputes values in the i-th feature dimension using
+            only non-missing values in that feature dimension.
+        """
         df1 = self.original_df.copy(deep=True)
         imp1 = SimpleImputer(missing_values=np.nan, strategy='mean')
         result_1 = imp1.fit_transform(df1.T)
@@ -31,6 +52,16 @@ class Imputer:
         return result_1
 
     def IterativeImputer(self):
+        """ Multivariate feature imputation. One of approaches is to use the 
+            IterativeImputer class, which models each feature with missing values 
+            as a function of other features, and uses that estimate for imputation. 
+            It does so in an iterated round-robin fashion: at each step, a feature
+            column is designated as output y and the other feature columns are 
+            treated as inputs X. A regressor is fit on (X, y) for known y. Then, 
+            the regressor is used to predict the missing values of y. This is 
+            done for each feature in an iterative fashion, and then is repeated 
+            for max_iter imputation rounds.
+        """
         df2 = self.original_df.copy(deep=True)
         imp2 = IterativeImputer(max_iter=10, random_state=0)
         result_2 = imp2.fit_transform(df2)
@@ -38,6 +69,9 @@ class Imputer:
         return result_2
 
     def KnnImputer(self):
+        """ The KNNImputer class provides imputation for filling in missing values 
+            using the k-Nearest Neighbors approach.
+        """
         df3 = self.original_df.copy(deep=True)
         imp3 = KNNImputer(n_neighbors=2, weights="uniform")
         result_3 = imp3.fit_transform(df3)
@@ -46,19 +80,18 @@ class Imputer:
 
 
 def deleter(data_imputed, delete_perct, missing_n, block_n) -> pd.DataFrame:
-    """
-    Randomly delete data for cross validation. The deletion is NOT in-\place.
+    """ Randomly delete data for cross validation. The deletion is NOT in-place.
 
     :param data_imputed: the original dataframe where the imputation has finished
     :param delete_perct: the percentage of deleted data. Eg, when delete_p = 0.1, we delete 10% of all data
-    :return: a new dataframe where deleted data is substituted by np.nan
+    :return data_deleting: a new dataframe where deleted data is substituted by np.nan
     """
     data_deleting = data_imputed.copy(deep=True)
     non_missing_n = int(data_deleting.shape[0] * data_deleting.shape[1])
     # chunk size is 2, thus at each time we delete a pair
     deleting_pairs = int(non_missing_n * delete_perct / round(missing_n / block_n))
 
-    for j in range(deleting_pairs):
+    for _ in range(deleting_pairs):
 
         store_idx = np.random.randint(0, high=len(data_imputed))
         month_idx = np.random.randint(0, high=24)
@@ -89,7 +122,7 @@ def outlier_detector(ori_data: pd.DataFrame):
     Detect outliers using three packages mentioned above.
 
     :param ori_data: data
-    :return: new dataframe with outliers
+    :return cleaned_df: a new dataframe with outliers
     """
 
     detector1 = QuantileAD(low=0.02, high=0.98)
@@ -136,6 +169,13 @@ def MAPE(y_df: pd.DataFrame, y_hat_df: pd.DataFrame) -> float:
 
 
 def cal_chunk_size(data_cleaned:pd.DataFrame):
+    """ The function that helps us determine the best size of deletion when doing
+        cross validation to validate our imputation result.
+
+    :param data_cleaned: pd.DataFrame after outliers are cleaned up
+    :return: missing_n: number of missing values
+             block_n: number of missing blocks/chuncks
+    """
     df5 = data_cleaned.copy(deep=True)
     temp = df5.fillna('missing')
     all_cnt = []
@@ -172,16 +212,18 @@ def cal_chunk_size(data_cleaned:pd.DataFrame):
     deleting_level = 0.1
     print()
     print(f'To delete extra 10% data, which is {int(non_missing_n * deleting_level)} data points, \n therefore we need to randomly delete {int(non_missing_n * deleting_level / round(missing_n / block_n))} blocks.')
-    return missing_n,block_n
+    return missing_n, block_n
 
-def cross_validator_Q7(imputer:Imputer,impute_method,original_data,cv_times,
-                    miss_n,b_n):
+def cross_validator(imputer: Imputer, impute_method, original_data, cv_times,
+                    miss_n, b_n):
     """
-    :param imputer: an instance of Imputer
-    :param impute_method: input a function, imputor. This function will be tested.
-    :param original_data: data
+    :param imputer: an instance of class Imputer
+    :param impute_method: input a function such imp.SimpleImputer. This function will be tested.
+    :param original_data: pd.DataFrame
     :param cv_times: repeat many times and calcualte average MAPE
-    :return: average MAPE for the imputor
+    :param miss_n: number of missing values, from cal_chunk_size
+    :param b_n: number of missing blocks/chuncks, from cal_chunk_size
+    :return: average MAPE of the CV for the imputer
     """
     error = np.zeros(cv_times)
     for i in range(cv_times):
