@@ -5,21 +5,22 @@ Includes all the projects that I can/ I could on my resume or interviews.
 
 Table of Content:
 ----------------------
+Alternative_Data_Analysis:
 
-AltData_Part_One_SQL: 
+    AltData_Part_One_SQL: 
 
-    Alternative Data Course - Mid-term Milestone
-    
-    EDA, Data Cleaning and Product Clustering 
-    
-    SQL, regular expression, sklearn
-    
-    
-AltData_Part_Two:
+        Alternative Data Course - Mid-term Milestone
+        
+        EDA, Data Cleaning and Product Clustering 
+        
+        SQL, regular expression, sklearn
+        
+        
+    AltData_Part_Two:
 
-    Alternative Data Course - Final Project
-    
-    Outlier Detecting and Data Imputation
+        Alternative Data Course - Final Project
+        
+        Outlier Detecting and Data Imputation
 
 Fixed_Income_Derivatives_Project_EDZ0:
 
@@ -50,7 +51,7 @@ ML_Classification_MNIST_DS11:
     Tree-based, boosting and Bagging, Voting
     
     
-MSCI:
+MSCI_Intern:
 
     Intern Assignments with MSCI
     
