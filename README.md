@@ -22,6 +22,22 @@ Alternative_Data_Analysis:
         
         Outlier Detecting and Data Imputation
 
+Data_Science_Applications:
+
+    Google_PageRank_DS10:
+
+        Data Science in Quant Finance Course
+        
+        Investigation upon the convergence of Google PageRank Algo
+
+    ML_Classification_MNIST_DS11:
+
+        Data Science in Quant Finance Course
+        
+        Machine Learning Classification on sklearn MNIST dataset
+        
+        Tree-based, boosting and Bagging, Voting
+    
 Fixed_Income_Derivatives_Project_EDZ0:
 
     PnL Attribution Analysis on a put on Eurodollar futures
@@ -31,25 +47,10 @@ Fixed_Income_Derivatives_Project_EDZ0:
 FX_SABR_Calibration:
 
     FX Volatility Smile Calibration with SABR model
-    
-Google_PageRank_DS10:
-
-    Data Science in Quant Finance Course
-    
-    Investigation upon the convergence of Google PageRank Algo
 
 IMDB_Analysis_SQL
     
-    SQL practice
-    
-ML_Classification_MNIST_DS11:
-
-    Data Science in Quant Finance Course
-    
-    Machine Learning Classification on sklearn MNIST dataset
-    
-    Tree-based, boosting and Bagging, Voting
-    
+    SQL practice/demo
     
 MSCI_Intern:
 
@@ -81,6 +82,4 @@ MSCI_Intern:
     
         Replicating results in paper M. Avellaneda and J.-H. Lee. Statistical Arbitrage in the U.S. Equities Market, and extend them with Chinese market data
 
-    - SQL_demos
 
-        SQL practice
