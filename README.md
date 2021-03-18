@@ -5,9 +5,9 @@ Includes all the projects that I can/ I could on my resume or interviews.
 
 Table of Content:
 ----------------------
-Alternative_Data_Analysis:
+Grocery_Transaction_Records_Project:
 
-    AltData_Part_One_SQL: 
+    Part_One_SQL: 
 
         Alternative Data Course - Mid-term Milestone
         
@@ -16,13 +16,21 @@ Alternative_Data_Analysis:
         SQL, regular expression, sklearn
         
         
-    AltData_Part_Two:
+    Part_Two:
 
         Alternative Data Course - Final Project
         
-        Outlier Detecting and Data Imputation
+        Outlier Detection, Time Series Imputation and forecasting
 
 Data_Science_Applications:
+
+    LSA_Recommender_DS7:
+
+        Data Science in Quant Finance Course
+
+        NLP - Built a Latent Semantic Analysis LSA-based recommender 
+        
+        Dataset: 10K article corpus
 
     Google_PageRank_DS10:
 
@@ -30,7 +38,7 @@ Data_Science_Applications:
         
         Investigation upon the convergence of Google PageRank Algo
 
-    ML_Classification_MNIST_DS11:
+    HandWritten_Digit_Classification_DS11:
 
         Data Science in Quant Finance Course
         
@@ -46,15 +54,15 @@ Fixed_Income_Derivatives_Project_EDZ0:
 
 FX_SABR_Calibration:
 
-    FX Volatility Smile Calibration with SABR model
+    Foreign Exchange Market Data, Volatility Smile Calibration with SABR model
 
 IMDB_Analysis_SQL
     
-    SQL practice/demo
+    MS Server SQL practice/demo
     
 MSCI_Intern:
 
-    Intern Assignments with MSCI
+    Weekly Assignments with MSCI
     
     - Assig_1_StudentT:
     
