@@ -129,6 +129,3 @@ dmypy.json
 .pyre/
 
 #others
-t_dists.pdf
-draft.ipynb 
-EDA_Sample.ipynb 
