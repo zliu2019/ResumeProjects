@@ -46,6 +46,24 @@ Data_Science_Applications:
         
         Tree-based, boosting and Bagging, Voting
     
+    Hedge_Fund_Return_Analysis_DS4
+
+        Data Science in Quant Finance Course
+
+        Linear Regression, factor model
+    
+    Housing_Feature_Engineering_DS6
+
+        Data Science in Quant Finance Course
+
+        OLS, Pipeline, ElasticNet, non-linear features
+
+EDA_Ecommerce_Images
+
+    Real-world ecommerce image dataset
+
+    Explortary Data Analysis, NLP, Visualization
+
 Fixed_Income_Derivatives_Project_EDZ0:
 
     PnL Attribution Analysis on a put on Eurodollar futures
@@ -56,6 +74,10 @@ FX_SABR_Calibration:
 
     Foreign Exchange Market Data, Volatility Smile Calibration with SABR model
 
+Contour_Image_Analysis
+
+    Explore the contour of Ancient Chinese Landscape Paintings and that of city skylines
+    
 IMDB_Analysis_SQL
     
     MS Server SQL practice/demo
