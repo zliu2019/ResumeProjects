@@ -1,8 +1,7 @@
 {
     "python.pythonPath": "C:\\Users\\xxxli\\Anaconda3\\envs\\mysixenv\\python.exe",
     "jupyter.jupyterServerType": "local",
-    "git.ignoreLimitWarning": true,
-    "GOOGLE_APPLICATION_CREDENTIALS":"C:\\Users\\xxxli\\Downloads\\eda-sample-308820-e2832e3a80ea.json"
+    "git.ignoreLimitWarning": true
 }
 
 
