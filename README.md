@@ -5,6 +5,15 @@ Includes all the projects that I can/ I could on my resume or interviews.
 
 Table of Content:
 ----------------------
+ML_Empirical_Asset_Pricing
+
+    Machine Learning in Empirical Asset Pricing and Risk Premia Forecasting Capstone Project with BANK OF AMERICA MERRILL LYNCH
+
+    Powerpoint Presentation
+    For code and report: https://github.com/zliu2019/ML-APRP-Forecasting
+
+    Python OOP, numpy, pandas, sklearn, mlfinlab, pyportfolioopt, etc
+
 Grocery_Transaction_Records_Project:
 
     Part_One_SQL: 
