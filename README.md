@@ -1,7 +1,7 @@
 # ResumeProjects
-(in progress)
+(in progress...)
 
-Includes all the projects that I can/ I could on my resume or interviews.
+Includes all the projects that I includedon my resume or interviews.
 
 Table of Content:
 ----------------------
